@@ -5,22 +5,34 @@ from logger import log_state
 from player import Player
 
 def main():
+    # Initialize Game and Setup Screen
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    
+    # Set Sprite Groups
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+    Player.containers = (updatable, drawable)
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+
+    # Set Game Clock
     clock = pygame.time.Clock()
     dt = 0
 
+    # Game Loop
     while True:
+        # Close Window Check
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
+        # Set and Show Display Output
         log_state()
-        dt = clock.tick(60) / 1000
-        screen.fill("black")
-        player.update(dt)
-        player.draw(screen)
-        pygame.display.flip()
+        dt = clock.tick(60) / 1000  # FPS/clockspeed
+        screen.fill("black")        # set background color
+        updatable.update(dt)        # update updatable sprites
+        for sprite in drawable:     # loop for drawble sprites
+            sprite.draw(screen)     # draw new sprite position
+        pygame.display.flip()       # output to display
 
     
     print(f"Starting Asteroids with pygame version: {pygame.version.ver}")
