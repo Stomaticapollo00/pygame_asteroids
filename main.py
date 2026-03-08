@@ -57,10 +57,10 @@ def main():
                 sys.exit()
         for asteroid in asteroids:                  # loop asteroid checker for collisions
             for shot in shots:                      # loop shot checker for collisions
-                if shot.collides_with(asteroid):    # if asteroid hit by shot log the event and kill sprites
+                if shot.collides_with(asteroid):    # if asteroid hit by shot log the event and kill/split sprites
                     log_event("asteroid_shot")
                     shot.kill()
-                    asteroid.kill()
+                    asteroid.split()
         for sprite in drawable:                     # loop for drawble sprites
             sprite.draw(screen)                     # draw new sprite position
         pygame.display.flip()                       # output to display
